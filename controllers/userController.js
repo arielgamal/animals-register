@@ -1,7 +1,7 @@
-const User = require('../models/userModel');
-const bcrypt = require('bcrypt');
+import User from '../models/userModel.js';
+import bcrypt from 'bcrypt'
 
-const createUser = async (req, res) => {
+export const createUser = async (req, res) => {
     const { username, password, email } = req.body;
 
     if (!username || !password || !email) {
@@ -26,7 +26,7 @@ const createUser = async (req, res) => {
     }
 }
 
-const listUsers = async (req, res) => {
+export const listUsers = async (req, res) => {
     try {
         const users = await User.find({}, '-password'); // Exclude password field
         res.status(200).json(users);
@@ -34,8 +34,3 @@ const listUsers = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
-
-module.exports = {
-    createUser,
-    listUsers
-};
