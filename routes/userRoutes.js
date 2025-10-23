@@ -1,12 +1,14 @@
-const express = require('express');
+import express from 'express'
+import { createUser, listUsers } from '../controllers/userController.js';
+
 const router = express.Router();
-const { createUser, listUsers, getUserById } = require('../controllers/userController');
+const { createUser, listUsers } = require('../controllers/userController');
 
 router.get('/', (req, res) => {
-    res.send('API is running...');
+    res.send('LOVE PET');
 });
 router.get('/users', listUsers);
 router.post('/users', createUser);
 router.get('/users/:id', getUserById);
 
-module.exports = router;
+export default router
