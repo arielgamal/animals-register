@@ -35,7 +35,20 @@ const listUsers = async (req, res) => {
     }
 }
 
+const getUserById = async (req, res) => {
+   try {
+    const user = await User.findById(req.params.id); // aqui
+    if (!user) {
+      return res.status(404).json({ message: 'Usuário não encontrado' });
+    }
+    res.json(user);
+  } catch (error) {
+    res.status(400).json({ message: 'ID inválido ou erro na busca', error });
+  }
+}
+
 module.exports = {
     createUser,
-    listUsers
+    listUsers,
+    getUserById
 };

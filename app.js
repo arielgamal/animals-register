@@ -11,9 +11,6 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/', userRoutes);
-// app.get('/', (req, res) => {
-//     res.send('API is running...');
-// });
 
 
 const PORT = process.env.PORT || 5000;
