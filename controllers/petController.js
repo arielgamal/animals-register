@@ -1,7 +1,15 @@
+import User from '../models/userModel.js';
 import Pet from "../models/animalModel.js";
 
+
 export const createPet = async (req, res) => {
-    const { name, especie, age, sexo, owner } = req.body;
+    const { name, especie, age, sexo, username } = req.body;
+    const existingUser = await User.findOne({ username });
+        if (!existingUser) {
+            return res.status(409).json({ message: 'Não encontramos esse usuário na plaforma' });
+        }
+    const ownerId = existingUser._id
+        console.log(ownerId)
     if (!name) {
         return res.status(400).json({ message: 'All fields are required' });
     }
@@ -10,15 +18,11 @@ export const createPet = async (req, res) => {
         return res.status(400).json({ message: 'All fields are required' });
     }
             
-    if (!owner) {
+    if (!ownerId) {
         return res.status(400).json({ message: 'All fields are required' });
     }
     try {
-        // const existingPet = await Pet.findOne({ username });
-        // if (existingPet) {
-        //     return res.status(409).json({ message: 'Username already exists' });
-        // }
-        const newPet = Pet.create({ name, especie, age, sexo, owner });
+        const newPet = Pet.create({ name, especie, age, sexo, owner:ownerId });
 
         return res.status(201).json({ message: 'User created successfully', pet: newPet });
     }

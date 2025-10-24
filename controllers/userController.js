@@ -38,7 +38,7 @@ export const listUsers = async (req, res) => {
 
 export const getUserById = async (req, res) => {
    try {
-    const user = await User.findById(req.params.id); // aqui
+    const user = await User.findById(req.params.id);
     if (!user) {
       return res.status(404).json({ message: 'Usuário não encontrado' });
     }
@@ -47,3 +47,19 @@ export const getUserById = async (req, res) => {
     res.status(400).json({ message: 'ID inválido ou erro na busca', error });
   }
 }
+
+
+export const getUserByUsername = async (req, res) => {
+  try {
+    const { username } = req.params;
+    const existingUser = await User.findOne({ username });
+
+    if (!existingUser) {
+      return res.status(404).json({ message: 'Usuário não encontrado.' });
+    }
+
+    res.json(existingUser);
+  } catch (error) {
+    res.status(400).json({ message: 'Erro na busca de usuário', error });
+  }
+};
